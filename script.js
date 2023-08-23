@@ -1,65 +1,57 @@
-// heart effect
-let clickableHearts = document.querySelectorAll(".heart");
-
-clickableHearts.forEach(function (heart) {
-  heart.addEventListener("click", function () {
-    heart.classList.toggle("clicked");
-  });
-});
-
-// delete the card 
-
-let button = document.querySelectorAll(".del");
-
-button.forEach(function (button, index) {
-  button.addEventListener("click", function () {
-    if (index == 0) {
-      document.getElementById("card1").style.display = "none";
-    } else if (index == 1) {
-      document.getElementById("card2").style.display = "none";
-    } else {
-      document.getElementById("card3").style.display = "none";
-    }
-  });
-});
-
-// quantite and totale price 
-
-let bt = document.querySelectorAll(".bt");
-let q1 = document.getElementById("quantite1");
-let q2 = document.getElementById("quantite2");
-let q3 = document.getElementById("quantite3");
+let qt = document.querySelectorAll(".quantite");
+let plus = document.querySelectorAll(".plus");
+let moins = document.querySelectorAll(".moins");
 let total = document.getElementById("total");
-let price = document.getElementsByClassName("price");
-let tot = Number(total.innerHTML);
-let init = 0;
+let price = document.querySelectorAll(".price");
+let heart = document.querySelectorAll(".heart");
+let about = document.querySelectorAll(".about");
+let dabout = document.querySelectorAll(".dabout");
+let del = document.querySelectorAll(".del");
+let card = document.querySelectorAll(".card");
 
-bt.forEach(function (bt, index) {
-  bt.addEventListener("click", function () {
-    if (index == 0 && Number(q1.innerHTML) > 0) {
-      q1.innerHTML--;
-      init -= Number(price[0].innerHTML);
-      total.innerHTML = init;
-    } else if (index == 1) {
-      q1.innerHTML++;
-      init += Number(price[0].innerHTML);
-      total.innerHTML = init;
-    } else if (index == 2 && Number(q2.innerHTML) > 0) {
-      q2.innerHTML--;
-      init -= Number(price[1].innerHTML);
-      total.innerHTML = init;
-    } else if (index == 3) {
-      q2.innerHTML++;
-      init += Number(price[1].innerHTML);
-      total.innerHTML = init;
-    } else if (index == 4 && Number(q3.innerHTML) > 0) {
-      q3.innerHTML--;
-      init -= Number(price[2].innerHTML);
-      total.innerHTML = init;
-    } else if (index == 5) {
-      q3.innerHTML++;
-      init += Number(price[2].innerHTML);
-      total.innerHTML = init;
+for (let i = 0; i < plus.length; i++) {
+  plus[i].addEventListener("click", function () {
+    qt[i].innerHTML++;
+    total.innerHTML = Number(total.innerHTML) + Number(price[i].innerHTML);
+  });
+}
+for (let i = 0; i < moins.length; i++) {
+  moins[i].addEventListener("click", function () {
+    if (Number(qt[i].innerHTML) > 0) {
+      qt[i].innerHTML--;
+      total.innerHTML = Number(total.innerHTML) - Number(price[i].innerHTML);
     }
   });
-});
+}
+// delete
+for (let i = 0; i < del.length; i++) {
+  del[i].addEventListener("click", function () {
+    card[i].remove();
+    total.innerHTML =
+      Number(total.innerHTML) -
+      Number(price[i].innerHTML) * Number(qt[i].innerHTML);
+  });
+}
+// heart
+for (let i = 0; i < heart.length; i++) {
+  heart[i].addEventListener("click", function () {
+    if (heart[i].style.color === "red") {
+      heart[i].style.color = "black";
+    } else {
+      heart[i].style.color = "red";
+    }
+  });
+}
+
+let isStyle1 = true;
+
+for (let i = 0; i < about.length; i++) {
+  about[i].addEventListener("click", function () {
+    if (isStyle1) {
+      dabout[i].classList.add("style1");
+    } else {
+      dabout[i].classList.remove("style1");
+    }
+    isStyle1 = !isStyle1;
+  });
+}
